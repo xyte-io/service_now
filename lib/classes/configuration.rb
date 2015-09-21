@@ -9,16 +9,15 @@ module ServiceNow
         end
 
         def self.get_resource(query_hash = {}, displayvalue = false, table)
-            # to be filled in
-            RestClient::Resource.new(URI.escape($root_url + "/#{table}.do?JSON&sysparm_action=getRecords&sysparm_query=#{hash_to_query(query_hash)}&displayvalue=#{displayvalue}"), $username, $password)
+            RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}?sysparm_exclude_reference_link=true&sysparm_action=getRecords&sysparm_query=#{hash_to_query(query_hash)}&displayvalue=#{displayvalue}"), {user: $username, password: $password, headers: {accept: 'application/json'}})
         end
 
         def self.post_resource(table)
-            RestClient::Resource.new(URI.escape($root_url + "/#{table}.do?JSON&sysparm_action=insert"), $username, $password)
+            RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}?sysparm_exclude_reference_link=true"), {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
         end
 
-        def self.update_resource(incident_number, table)
-           RestClient::Resource.new(URI.escape($root_url + "/#{table}.do?JSON&sysparm_query=number=#{incident_number}&sysparm_action=update"), $username, $password) 
+        def self.update_resource(incident_sys_id, table)
+           RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}/#{incident_sys_id}?sysparm_exclude_reference_link=true"), {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
         end
 
         private

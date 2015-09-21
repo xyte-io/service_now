@@ -31,7 +31,7 @@ module ServiceNow
             query_hash[:sys_id] = sys_id
             response = Configuration.get_resource(query_hash = query_hash, table = "sys_user").get()
             hash = JSON.parse(response, { :symbolize_names => true })
-            user = User.new(hash[:records][0])
+            user = User.new(hash[:result][0])
             if user.attributes.nil?
                 puts "SN::Alert: No user with sys_id: #{sys_id} found"
                 return User.new
