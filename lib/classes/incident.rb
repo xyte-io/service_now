@@ -46,10 +46,10 @@ module ServiceNow
       end
       # we only create new incidents if it's not saved already
       if !@saved_on_sn
-        response = Configuration.post_resource(table = "incident").post(self.attributes.to_json)
+        response = Configuration.post_resource(table = "incident").post(self.attributes.compact.to_json)
       else
         @saved_on_sn = false # Allow the number to be set again from the data pulled back
-        response = Configuration.update_resource(self.sys_id, table = "incident").patch(self.attributes.to_json)
+        response = Configuration.update_resource(self.sys_id, table = "incident").patch(self.attributes.compact.to_json)
       end
       hash = JSON.parse(response, {:symbolize_names => true})
       # this is the object
