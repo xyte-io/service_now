@@ -9,15 +9,15 @@ module ServiceNow
         end
 
         def self.get_resource(query_hash = {}, displayvalue = false, table)
-            RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}?sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_query=#{hash_to_query(query_hash)}&displayvalue=#{displayvalue}"), {user: $username, password: $password, headers: {accept: 'application/json'}})
+            RestClient::Resource.new($root_url + "/api/now/v1/table/#{table}?sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_query=#{hash_to_query(query_hash)}&displayvalue=#{displayvalue}", {user: $username, password: $password, headers: {accept: 'application/json'}})
         end
 
         def self.post_resource(table)
-            RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}?sysparm_input_display_value=true&sysparm_display_value=true&sysparm_exclude_reference_link=true"), {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
+            RestClient::Resource.new($root_url + "/api/now/v1/table/#{table}?sysparm_input_display_value=true&sysparm_display_value=true&sysparm_exclude_reference_link=true", {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
         end
 
         def self.update_resource(incident_sys_id, table)
-           RestClient::Resource.new(URI.escape($root_url + "/api/now/v1/table/#{table}/#{incident_sys_id}?sysparm_input_display_value=true&sysparm_display_value=true&sysparm_exclude_reference_link=true"), {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
+           RestClient::Resource.new($root_url + "/api/now/v1/table/#{table}/#{incident_sys_id}?sysparm_input_display_value=true&sysparm_display_value=true&sysparm_exclude_reference_link=true", {user: $username, password: $password, headers: {accept: 'application/json', content_type: 'application/json'}})
         end
 
         private
